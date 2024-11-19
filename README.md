@@ -1,16 +1,69 @@
 # Tteonaso
 
-This template should help get you started developing with Vue 3 in Vite.
+## Vue 프로젝트 디렉토리 구조 가이드
 
-## Recommended IDE Setup
+```
+src/
+├── api/                 # API 호출 관련 파일
+├── assets/              # 정적 리소스 (이미지, 폰트, CSS 등)
+├── common/              # 공통 유틸리티 함수 및 상수
+├── components/          # 도메인 별 기능 Vue 컴포넌트
+├── layouts/             # 페이지 레이아웃
+├── middlewares/         # 라우터 및 서비스 미들웨어
+├── plugins/             # 외부 라이브러리 설정
+├── router/              # Vue Router 설정
+├── services/            # 서비스 로직 관리
+├── store/               # Vuex 상태 관리
+├── views/               # 페이지 단위 컴포넌트
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+```
 
-## Customize configuration
+## 폴더별 설명
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### 1. `api/`
+- API 호출 관련 파일들을 저장합니다. 각 API 엔드포인트별로 파일을 나눠 관리하며, 서버와의 통신을 담당합니다.
 
-## Project Setup
+### 2. `assets/`
+- 이미지, 폰트, 스타일시트 등 정적 리소스를 저장합니다. 컴포넌트나 스타일 파일에서 참조하여 사용됩니다.
+
+### 3. `common/`
+- 공통적으로 사용되는 유틸리티 함수와 상수를 저장합니다. 프로젝트 전반에서 재사용 가능한 로직과 데이터를 관리합니다.
+
+### 4. `components/`
+- 도메인 별 기능 Vue 컴포넌트를 저장합니다.
+
+### 5. `layouts/`
+- 페이지의 전체 구조를 정의하는 레이아웃 파일을 저장합니다. 예를 들어, 헤더, 푸터, 사이드바 등을 포함한 공통 레이아웃을 관리합니다.
+
+### 6. `middlewares/`
+- 라우터나 서비스 요청에 대한 미들웨어 로직을 저장합니다. 예를 들어, 인증, 권한 검사를 수행하는 로직이 포함됩니다.
+
+### 7. `plugins/`
+- 외부 라이브러리와 플러그인 관련 설정 파일을 저장합니다. 예를 들어, Axios 설정이나 Vuex Persist 설정이 포함될 수 있습니다.
+
+### 8. `router/`
+- Vue Router 설정 파일을 저장합니다. 라우팅 정보와 네비게이션 가드를 정의합니다.
+
+### 9. `services/`
+- 서비스 로직을 관리하는 파일을 저장합니다. API 호출과 컴포넌트 간의 중간 로직을 분리하여 재사용성을 높입니다.
+
+### 10. `store/`
+- Vuex 상태 관리 관련 파일을 저장합니다. 전역 상태, 뮤테이션, 액션 등을 정의하며, 모듈화하여 관리할 수 있습니다.
+
+### 11. `views/`
+- 페이지 단위 Vue 컴포넌트를 저장합니다. 라우터에 연결되는 최상위 컴포넌트를 포함하며, 주로 각 페이지의 UI와 로직을 담당합니다.
+
+---
+
+## 참고
+- 이 디렉토리 구조는 프로젝트의 요구사항에 맞게 유연하게 수정할 수 있습니다.
+- 폴더와 파일의 역할을 명확히 정의하여 팀 협업 시 혼란을 최소화합니다.
+- 코드 재사용성을 높이고 유지보수를 용이하게 하기 위해 파일을 기능별로 나눕니다.
+
+
+## 참조 디렉토리 구조
+![디렉토리 참조 구조](https://velog.io/@seulgea/Vue-%ED%8F%B4%EB%8D%94-%EA%B5%AC%EC%A1%B0)
+
 
 ```sh
 npm install
