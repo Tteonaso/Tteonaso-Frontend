@@ -37,12 +37,15 @@
       <button type="submit" class="submit-btn">회원가입</button>
     </form>
 
-
+    <!-- 모달 컴포넌트 사용 -->
+    <Modal :visible="isModalVisible" :content="modalMessage" @update:visible="isModalVisible = $event" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import Modal from "@/layouts/Modal.vue";
+import { useRouter } from 'vue-router'; // Vue Router 가져오기
 
 const name = ref('');
 const email = ref('');
@@ -51,6 +54,9 @@ const confirmPassword = ref('');
 const age = ref('');
 const phone = ref('');
 const gender = ref(''); // 'FEMALE' or 'MALE'
+const isModalVisible = ref(false);  // 모달의 가시성 상태
+const modalMessage = ref('');
+const router = useRouter()
 
 // 성별 선택 처리
 const selectGender = (selectedGender) => {
@@ -60,7 +66,8 @@ const selectGender = (selectedGender) => {
 // 회원가입 처리 함수
 const handleSignUp = async () => {
   if (password.value !== confirmPassword.value) {
-    alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+    modalMessage.value = '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
+    isModalVisible.value = true;
     return;
   }
 
@@ -85,15 +92,17 @@ const handleSignUp = async () => {
     if (response.ok && data.isSuccess) {
       console.log('회원가입 성공:', data);
       // 회원가입 성공 후 처리 (예: 리다이렉트, 토큰 저장 등)
-      alert('회원가입 성공!');
+      router.push('/signin'); // '/signin' 라우트로 이동
     } else {
       console.error('회원가입 실패:', data);
       // 실패 시 처리 (모달 등으로 메시지 표시)
-      alert(data.message);
+      modalMessage.value = data.message;
+      isModalVisible.value = true;
     }
   } catch (error) {
     console.error('회원가입 요청 중 오류 발생:', error);
-    alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
+    modalMessage.value = '회원가입 중 오류가 발생했습니다. 다시 시도해주세요.';
+    isModalVisible.value = true;
   }
 };
 </script>
