@@ -21,9 +21,10 @@
 
 <script setup>
 defineProps({
-  location: String,         // 지역 이름
+  location: String,
   participants: Number,       // 채팅방 정원 초과 여부
 });
+
 </script>
 
 <style scoped>

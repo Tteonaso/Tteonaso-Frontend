@@ -2,7 +2,7 @@
   <div class="chat-room-list">
     <ChatRoom
       v-for="chatRoom in chatRooms"
-      :key="chatRoom.id"
+      :key="chatRoom.chatRoomId"
       :location="chatRoom.location"
       :participants="chatRoom.participants"
     />
@@ -10,33 +10,27 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import ChatRoom from "@/components/chatroom/ChatRoom.vue";
 import axios from 'axios';
 
-export default {
-  components: {
-    ChatRoom,
-  },
-  data() {
-    return {
-      chatRooms: [], // chatRooms 데이터를 담을 배열
-    };
-  },
-  methods: {
-    async fetchChatRooms() {
-      try {
+const chatRooms = ref([]); // chatRooms 배열 초기화
+
+async function fetchChatRooms() {
+    try {
         const response = await axios.get('http://localhost:8080/chatroom');
-        console.log(response);
-        this.chatRooms = response.data; // 응답 데이터를 chatRooms에 저장
-      } catch (error) {
+        chatRooms.value = response.data.result; // 응답 데이터를 chatRooms에 저장
+        console.log(chatRooms.value); // 데이터를 확인하려면 콘솔 출력
+    } catch (error) {
         console.error('Failed to fetch chat rooms:', error);
-      }
-    },
-  },
-  mounted() {
-    this.fetchChatRooms(); // 컴포넌트가 마운트되면 데이터 요청
-  },
-};
+    }
+}
+
+// 데이터를 가져오는 함수 호출
+fetchChatRooms();
+
+
+
 </script>
 
 <style scoped>

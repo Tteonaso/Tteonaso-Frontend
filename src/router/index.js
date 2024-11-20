@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import MapPage from '@/components/map/KaKaoMap.vue';
-import FilterMapPage from '@/components/map/MapFilter.vue';
+import MapPage from "@/views/map/KaKaoMap.vue";
+import FilterMapPage from "@/views/map/MapFilter.vue";
 import SignUp from '@/components/member/SignUp.vue'; // SignUp.vue 경로를 가져옵니다
 import SignIn from "@/components/member/SignIn.vue";
 import OnBoarding from "@/components/member/OnBoarding.vue";
+import ChatRoomListPage from "@/views/ChatRoomListPage.vue";
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     path: '/map',
     name: 'MapPage',
     component: MapPage
+  },
+  {
+    path: '/chatroom',
+    name: 'ChatRoomListPage',
+    component: ChatRoomListPage
   },
   {
     path: '/map/filter',
