@@ -103,7 +103,7 @@ const fetchDistricts = () => {
     return;
   }
 
-  const url = `https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=&pageNo=1&MobileOS=ETC&MobileApp=AppTest&areaCode=${selectedCityId}&_type=json`;
+  const url = `http://localhost:8080/map/address/sido?sidoName=${selectedCity.value}`;
 
   fetch(url)
     .then(response => {
