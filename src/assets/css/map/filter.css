@@ -1,0 +1,117 @@
+.filter-container {
+    display: flex;
+    font-family: 'BMHA';
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh; /* min-height를 height로 변경 */
+    padding: 20px;
+    padding-top: 10vh;
+    overflow-y: hidden; /* 세로 스크롤 제거 */
+}
+
+.apply-filter-button {
+    width: 60%;
+    max-width: 600px;
+    background-color: #007bff;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: 'BMHP';
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top: 3vh; /* 여백 줄임 */
+}
+  
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 5vh;
+}
+  
+.header-button {
+    background-color: #fdfdfd;
+    color: #007bff;
+    border: none;
+    font-size: 14px;
+    font-family: 'BMHP';
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 80px;
+    height: 30px; /* 버튼 높이 줄임 */
+}
+  
+.header-button:hover {
+    background-color: #e0e0e0;
+}
+
+.filter-section {
+    width: 60%;
+    max-width: 600px;
+    margin-bottom: 5vh;
+    text-align: left;
+    position: relative;
+}
+
+/* 지역과 카테고리 사이의 구분선 - 단순화 */
+.filter-section:first-child {
+    margin-bottom: 8vh; /* 여백 증가 */
+}
+
+/* 구분선 추가 */
+.filter-section:first-child::after {
+    content: '';
+    position: absolute;
+    bottom: -3vh;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(224, 247, 250, 0),  /* 투명한 연한 하늘색 */
+        rgba(224, 247, 250, 1) 20%,  /* 연한 하늘색 */
+        rgba(224, 247, 250, 1) 80%,
+        rgba(224, 247, 250, 0)
+    );
+}
+  
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-family: 'BMHA';
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+  
+select option {
+    padding: 15px 0;
+}
+
+.apply-filter-button {
+    width: 60%;
+    max-width: 600px;
+    background-color: #007bff;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: 'BMHP';
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top: 20vh; /* 위 여백 추가 */
+}
+
+.apply-filter-button:hover {
+    background-color: #0056b3;
+}

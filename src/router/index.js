@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
+import MapPage from '@/components/map/KaKaoMap.vue';
+import FilterMapPage from '@/components/map/MapFilter.vue';
 import SignUp from '@/components/member/SignUp.vue'; // SignUp.vue 경로를 가져옵니다
 import SignIn from "@/components/member/SignIn.vue";
 import OnBoarding from "@/components/member/OnBoarding.vue";
@@ -19,6 +22,16 @@ const routes = [
     name: 'SignIn',
     component: SignIn, // 로그인 컴포넌트를 등록
   },
+  {
+    path: '/map',
+    name: 'MapPage',
+    component: MapPage
+  },
+  {
+    path: '/map/filter',
+    name: 'FilterMapPage',
+    component: FilterMapPage
+  }
 ];
 
 const router = createRouter({
