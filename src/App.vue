@@ -6,14 +6,16 @@
 </template>
 
 <script>
-import KakaoMap from './components/map/KaKaoMap.vue';
+import KakaoMap from '@/views/map/KaKaoMap.vue';
 import OnBoarding from "@/components/member/OnBoarding.vue";
+import SearchPage from "@/views/map/SearchPage.vue";
 
 export default {
   name: 'App',
   components: {
     OnBoarding,
-    KakaoMap
+    KakaoMap,
+    SearchPage
   }
 }
 </script>

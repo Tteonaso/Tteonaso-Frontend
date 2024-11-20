@@ -109,9 +109,29 @@ select option {
     font-family: 'BMHP';
     font-size: 16px;
     transition: background-color 0.3s;
-    margin-top: 20vh; /* 위 여백 추가 */
+    margin-top: 10vh; /* 위 여백 추가 */
 }
 
 .apply-filter-button:hover {
     background-color: #0056b3;
+}
+
+.category-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    font-family: 'BMD';
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  
+.category-buttons button:hover {
+    background-color: #e0e0e0;
+}
+  
+.category-buttons button.active {
+    background-color: #007bff;
+    color: white;
 }
