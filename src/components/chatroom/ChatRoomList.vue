@@ -13,16 +13,30 @@
 import ChatRoom from "@/components/chatroom/ChatRoom.vue";
 import axios from 'axios';
 
-// 예시 데이터
-const chatRooms = [
-  { location: "서울시 마포구", participants: 72, isFull: false },
-  { location: "서울시 동작구", participants: 100, isFull: true },
-  { location: "서울시 광진구", participants: 74, isFull: false },
-  { location: "수원시 권선구", participants: 50, isFull: false },
-  { location: "수원시 팔달구", participants: 120, isFull: true },
-  { location: "수원시 영통구", participants: 80, isFull: false },
-  { location: "대전시 유성구", participants: 78, isFull: false },
-];
+export default {
+  components: {
+    ChatRoom,
+  },
+  data() {
+    return {
+      chatRooms: [], // chatRooms 데이터를 담을 배열
+    };
+  },
+  methods: {
+    async fetchChatRooms() {
+      try {
+        const response = await axios.get('http://localhost:8080/chatroom');
+        console.log(response);
+        this.chatRooms = response.data; // 응답 데이터를 chatRooms에 저장
+      } catch (error) {
+        console.error('Failed to fetch chat rooms:', error);
+      }
+    },
+  },
+  mounted() {
+    this.fetchChatRooms(); // 컴포넌트가 마운트되면 데이터 요청
+  },
+};
 </script>
 
 <style scoped>
