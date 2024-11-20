@@ -1,12 +1,17 @@
 <template>
   <div id="ground">
+    <h3>지역별 채팅방</h3>
+    <SearchBar class="search-bar"></SearchBar>
     <ChatRoomList></ChatRoomList>
+    <BottomNavigationBar></BottomNavigationBar>
   </div>
 
 </template>
 
 <script setup>
+import SearchBar from "@/components/chatroom/SearchBar.vue";
 import ChatRoomList from "@/components/chatroom/ChatRoomList.vue";
+import BottomNavigationBar from "@/components/BottomNavigationBar.vue";
 </script>
 
 <style scoped>
@@ -20,5 +25,9 @@ import ChatRoomList from "@/components/chatroom/ChatRoomList.vue";
   justify-content: center;
   align-items: center;
   background-color: #f9fafc;
+}
+
+.search-bar {
+  margin-bottom: 20px; /* SearchBar와 ChatRoomList 사이의 간격 */
 }
 </style>

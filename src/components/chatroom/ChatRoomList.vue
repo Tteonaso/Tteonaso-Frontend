@@ -19,7 +19,7 @@ const chatRooms = ref([]); // chatRooms 배열 초기화
 async function fetchChatRooms() {
     try {
         const response = await axios.get('http://localhost:8080/chatroom');
-        chatRooms.value = response.data.result; // 응답 데이터를 chatRooms에 저장
+        chatRooms.value = response.data.result.slice(0, 4); // 응답 데이터를 chatRooms에 저장
         console.log(chatRooms.value); // 데이터를 확인하려면 콘솔 출력
     } catch (error) {
         console.error('Failed to fetch chat rooms:', error);
