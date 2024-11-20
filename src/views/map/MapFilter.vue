@@ -3,7 +3,7 @@
     <div class="filter-header">
       <button @click="clearAll" class="header-button">Clear All</button>
       <h1>Filter</h1>
-      <button @click="applyFilter" class="header-button">필터 적용</button>
+      <button @click="cancelFilter" class="header-button">필터 취소</button>
     </div>
     <div class="filter-section">
       <h2>지역</h2>
@@ -22,7 +22,7 @@
         </select>
         <select v-model="selectedTown" :disabled="!selectedDistrict">
           <option value="" disabled selected>동을 선택하세요</option>
-          <option v-for="town in towns" :key="town.id" :value="town.id">
+          <option v-for="town in towns" :key="town.id" :value="town.name">
             {{ town.name }}
           </option>
         </select>
@@ -30,13 +30,15 @@
     </div>
     <div class="filter-section">
       <h2>카테고리</h2>
-      <div class="custom-select">
-        <select v-model="selectedCategory">
-          <option value="" disabled selected>카테고리를 선택하세요</option>
-          <option v-for="category in categories" :key="category.id" :value="category.id">
-            {{ category.name }}
-          </option>
-        </select>
+      <div class="category-buttons">
+        <button
+          v-for="category in categories"
+          :key="category.id"
+          :class="{'active': selectedCategory === category.id}"
+          @click="selectCategory(category.id)"
+        >
+          {{ category.name }}
+        </button>
       </div>
     </div>
 
@@ -47,7 +49,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
+import { useRouter } from "vue-router";
+
+const emit = defineEmits(["apply"]);
+const router = useRouter();
 
 const selectedCity = ref("");
 const selectedDistrict = ref("");
@@ -78,9 +84,33 @@ const districts = ref([]);
 const towns = ref([]);
 
 const categories = ref([
-  { id: "1", name: "카페" },
-  { id: "2", name: "음식점" },
+  { id: "MT1", name: "대형마트" },
+  { id: "CS2", name: "편의점" },
+  { id: "PS3", name: "어린이집, 유치원" },
+  { id: "SC4", name: "학교" },
+  { id: "AC5", name: "학원" },
+  { id: "PK6", name: "주유소, 충전소" },
+  { id: "SW8", name: "지하철역" },
+  { id: "BK9", name: "은행" },
+  { id: "CT1", name: "문화시설" },
+  { id: "AG2", name: "공공기관" },
+  { id: "PO3", name: "대형마트" },
+  { id: "AT4", name: "관광명소" },
+  { id: "AD5", name: "숙박" },
+  { id: "FD6", name: "음식점" },
+  { id: "CE7", name: "카페" },
+  { id: "HP8", name: "병원" },
+  { id: "PM9", name: "약국" },
 ]);
+
+const selectCategory = (categoryId) => {
+  if (selectedCategory.value === categoryId) {
+    selectedCategory.value = ""; // 동일한 카테고리 클릭 시 선택 취소
+  } else {
+    selectedCategory.value = categoryId; // 새 카테고리 선택
+  }
+
+};
 
 const clearAll = () => {
   selectedCity.value = "";
@@ -94,9 +124,34 @@ const applyFilter = () => {
   console.log('선택된 구/군:', selectedDistrict.value);
   console.log('선택된 동:', selectedTown.value);
   console.log('선택된 카테고리:', selectedCategory.value);
+
+  // 선택된 필터 데이터를 부모 컴포넌트로 전달
+  emit("apply", {
+    selectedTown: selectedTown.value,
+    category: selectedCategory.value
+  });
+
+  router.push({
+    name: 'MapPage',
+    query: { town: selectedTown.value, category: selectedCategory.value }
+  });
+};
+
+const cancelFilter = () => {
+  // 현재 쿼리 파라미터를 그대로 사용하여 MapPage로 이동
+  router.push({
+    name: 'MapPage',
+    query: { town: selectedTown.value, category: selectedCategory.value }
+  });
 };
 
 const fetchDistricts = () => {
+  // 시/도 변경 시 구/군 및 동 초기화
+  selectedDistrict.value = "";
+  selectedTown.value = "";
+  districts.value = [];
+  towns.value = [];
+
   const selectedCityId = cities.value.find(city => city.name === selectedCity.value)?.id;
   if (!selectedCityId) {
     console.error("City not found for selected city name:", selectedCity.value);
@@ -114,10 +169,10 @@ const fetchDistricts = () => {
     })
     .then(data => {
       console.log("API 응답:", data); // 응답 본문 출력
-      if (data.response.body.items.item) {
-        districts.value = data.response.body.items.item.map(item => ({
-          id: item.code,
-          name: item.name
+      if (data.result && data.result.gugunNames) {
+        districts.value = data.result.gugunNames.map((name, index) => ({
+          id: index.toString(), // 인덱스를 id로 사용
+          name: name
         }));
       } else {
         districts.value = [];
@@ -127,6 +182,40 @@ const fetchDistricts = () => {
     .catch(error => console.error("Error fetching districts:", error));
 };
 
+const fetchTowns = () => {
+  // 구/군 변경 시 동 초기화
+  selectedTown.value = "";
+  towns.value = [];
+
+  const selectedDistrictName = districts.value.find(district => district.id === selectedDistrict.value)?.name;
+  if (!selectedDistrictName) {
+    console.error("District not found for selected district ID:", selectedDistrict.value);
+    return;
+  }
+
+  const url = `http://localhost:8080/map/address/gugun?gugunName=${encodeURIComponent(selectedDistrictName)}`;
+
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json(); // JSON으로 직접 파싱
+    })
+    .then(data => {
+      console.log("API 응답:", data); // 응답 본문 출력
+      if (data.result && data.result.dongNames) {
+        towns.value = data.result.dongNames.map((name, index) => ({
+          id: index.toString(), // 인덱스를 id로 사용
+          name: name
+        }));
+      } else {
+        towns.value = [];
+        console.error("No town data found.");
+      }
+    })
+    .catch(error => console.error("Error fetching towns:", error));
+};
 </script>
 
 <style scoped>
