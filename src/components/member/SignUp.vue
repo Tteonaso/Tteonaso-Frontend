@@ -2,44 +2,100 @@
   <div id="ground">
     <h1 class="title">회원 가입</h1>
     <p class="description">계정을 만들어 떠나쏘 서비스를 이용할 수 있어요</p>
-    <form class="form">
+    <form class="form" @submit.prevent="handleSignUp">
       <div class="input-group">
         <label for="name">이름</label>
-        <input type="text" id="name" placeholder="이름" />
+        <input v-model="name" type="text" id="name" placeholder="이름" />
       </div>
       <div class="input-group">
         <label for="email">이메일</label>
-        <input type="email" id="email" placeholder="이메일" />
+        <input v-model="email" type="email" id="email" placeholder="이메일" />
       </div>
       <div class="input-group">
         <label for="password">비밀번호</label>
-        <input type="password" id="password" placeholder="비밀번호" />
+        <input v-model="password" type="password" id="password" placeholder="비밀번호" />
       </div>
       <div class="input-group">
         <label for="confirm-password">비밀번호 확인</label>
-        <input type="password" id="confirm-password" placeholder="비밀번호 확인" />
+        <input v-model="confirmPassword" type="password" id="confirm-password" placeholder="비밀번호 확인" />
       </div>
       <div class="input-group">
         <label for="age">나이</label>
-        <input type="number" id="age" placeholder="나이" />
+        <input v-model="age" type="number" id="age" placeholder="나이" />
       </div>
       <div class="input-group">
         <label for="phone">전화번호</label>
-        <input type="tel" id="phone" placeholder="전화번호" />
+        <input v-model="phone" type="tel" id="phone" placeholder="전화번호" />
       </div>
       <div class="input-group">
         <label>성별</label>
         <div class="gender-group">
-          <button type="button" class="gender-btn">여성</button>
-          <button type="button" class="gender-btn">남성</button>
+          <button type="button" :class="{'selected': gender === 'FEMALE'}" @click="selectGender('FEMALE')" class="gender-btn">여성</button>
+          <button type="button" :class="{'selected': gender === 'MALE'}" @click="selectGender('MALE')" class="gender-btn">남성</button>
         </div>
       </div>
       <button type="submit" class="submit-btn">회원가입</button>
     </form>
+
+
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const age = ref('');
+const phone = ref('');
+const gender = ref(''); // 'FEMALE' or 'MALE'
+
+// 성별 선택 처리
+const selectGender = (selectedGender) => {
+  gender.value = selectedGender;
+};
+
+// 회원가입 처리 함수
+const handleSignUp = async () => {
+  if (password.value !== confirmPassword.value) {
+    alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+    return;
+  }
+
+  const formData = new FormData();
+
+  // formData에 값 추가
+  formData.append('name', name.value);
+  formData.append('email', email.value);
+  formData.append('password', password.value); // 비밀번호가 일치할 때만 추가
+  formData.append('age', age.value);
+  formData.append('phone', phone.value);
+  formData.append('gender', gender.value);
+
+  try {
+    const response = await fetch('http://localhost:8080/member/signup', {
+      method: 'POST',
+      body: formData, // FormData를 body로 전송
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.isSuccess) {
+      console.log('회원가입 성공:', data);
+      // 회원가입 성공 후 처리 (예: 리다이렉트, 토큰 저장 등)
+      alert('회원가입 성공!');
+    } else {
+      console.error('회원가입 실패:', data);
+      // 실패 시 처리 (모달 등으로 메시지 표시)
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error('회원가입 요청 중 오류 발생:', error);
+    alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
+  }
+};
 </script>
 
 <style scoped>
