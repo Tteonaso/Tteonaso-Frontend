@@ -14,23 +14,19 @@
       <button type="submit" class="submit-btn">로그인</button>
     </form>
 
-    <!-- 모달 -->
-    <div v-if="showModal" class="modal">
-      <div class="modal-content">
-        <h2>떠나쏘</h2>
-        <p>{{ modalMessage }}</p>
-        <button @click="closeModal">확인</button>
-      </div>
-    </div>
+    <!-- 모달 컴포넌트 사용 -->
+    <Modal :visible="isModalVisible" :content="modalMessage" @update:visible="isModalVisible = $event" />
+
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import Modal from "@/layouts/Modal.vue";
 
 const email = ref('');
 const password = ref('');
-const showModal = ref(false);
+const isModalVisible = ref(false);  // 모달의 가시성 상태
 const modalMessage = ref('');
 
 // 로그인 처리 함수
@@ -62,13 +58,13 @@ const handleLogin = async () => {
 
       // 로그인 성공 후 처리 (예: 리다이렉트, 토큰 저장 등)
       modalMessage.value = '로그인 성공';
-      showModal.value = true;
+      isModalVisible.value = true;
 
     } else {
       // 로그인 실패 시 메시지를 모달로 표시
       console.error('로그인 실패:', data);
       modalMessage.value = data.message;
-      showModal.value = true;
+      isModalVisible.value = true;
 
       // 로그인 실패 시 입력 필드 초기화
       email.value = '';
@@ -77,7 +73,7 @@ const handleLogin = async () => {
   } catch (error) {
     console.error('로그인 요청 중 오류 발생:', error);
     modalMessage.value = '로그인 요청 중 오류가 발생했습니다. 다시 시도해주세요.';
-    showModal.value = true;
+    isModalVisible.value = true;
   }
 };
 
