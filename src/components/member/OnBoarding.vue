@@ -2,11 +2,20 @@
   <div id="ground">
     <img src="../../assets/images/tteonaso.png" id="logo">
     <button class="btn" id="signin">로그인</button>
-    <button class="btn" id="signup">회원가입</button>
+    <!-- id=signup 버튼 클릭 시 /signup 라우트로 이동 -->
+    <button class="btn" id="signup" @click="goToSignUp">회원가입</button>
   </div>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'; // Vue Router 가져오기
+
+const router = useRouter(); // useRouter 인스턴스 생성
+
+// 회원가입 페이지로 이동하는 함수
+const goToSignUp = () => {
+  router.push('/signup'); // '/signup' 라우트로 이동
+};
 </script>
 
 <style scoped>
