@@ -3,9 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import KaKaoMap from '@/views/map/KaKaoMap.vue';
 import MapFilter from '@/views/map/MapFilter.vue';
 import SearchPage from '@/views/map/SearchPage.vue';
-import SignUp from '@/views/member/SignUp.vue'; // SignUp.vue 경로를 가져옵니다
-import SignIn from "@/views/member/SignIn.vue";
-import OnBoarding from "@/views/member/OnBoarding.vue";
+import SignUp from '@/components/member/SignUp.vue'; // SignUp.vue 경로를 가져옵니다
+import SignIn from "@/components/member/SignIn.vue";
+import OnBoarding from "@/components/member/OnBoarding.vue";
 
 const routes = [
   {

@@ -7,7 +7,7 @@
 
 <script>
 import KakaoMap from '@/views/map/KaKaoMap.vue';
-import OnBoarding from "@/views/member/OnBoarding.vue";
+import OnBoarding from "@/components/member/OnBoarding.vue";
 import SearchPage from "@/views/map/SearchPage.vue";
 
 export default {
