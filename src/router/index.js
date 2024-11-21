@@ -7,6 +7,7 @@ import SignUp from '@/components/member/SignUp.vue'; // SignUp.vue 경로를 가
 import SignIn from "@/components/member/SignIn.vue";
 import OnBoarding from "@/components/member/OnBoarding.vue";
 import ChatRoomListPage from "@/views/ChatRoomListPage.vue";
+import ChatPage from "@/views/ChatPage.vue";
 
 const routes = [
   {
@@ -43,6 +44,12 @@ const routes = [
     path: '/map/filter',
     name: 'FilterMapPage',
     component: FilterMapPage
+  },
+  {
+    path: '/chatroom/chat/:chatRoomId', // Path Parameter 정의
+    name: 'ChatPage',
+    component: ChatPage, // 채팅방 상세 페이지
+    props: true, // props로 전달
   },
 ];
 

@@ -3,6 +3,7 @@
         <ChatRoom
                 v-for="chatRoom in chatRooms"
                 :key="chatRoom.chatRoomId"
+                :chatRoomId="chatRoom.chatRoomId"
                 :location="chatRoom.location"
                 :participants="chatRoom.participants"
         />

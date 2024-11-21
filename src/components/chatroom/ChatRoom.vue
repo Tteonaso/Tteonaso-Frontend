@@ -13,6 +13,7 @@
     </div>
     <button
       class="enter-btn"
+      @click="enterChatRoom"
     >
       입장
     </button>
@@ -20,14 +21,35 @@
 </template>
 
 <script setup>
-defineProps({
+import { useRouter } from "vue-router"; // Vue Router import
+
+const router = useRouter();
+
+// Props 정의
+const props = defineProps({
+  chatRoomId: Number,
   location: String,
-  participants: Number,       // 채팅방 정원 초과 여부
+  participants: Number,
 });
 
+// 채팅방 입장 함수
+function enterChatRoom() {
+  if (!props.chatRoomId) { // props.chatRoomId로 접근
+    console.error("Chat Room ID is missing");
+    return;
+  }
+  router.push({
+    path: `/chatroom/chat/${props.chatRoomId}}`,
+    query: {
+      location: props.location, // location을 query로 전달
+    },
+  });
+}
 </script>
 
+
 <style scoped>
+/* 기존 스타일 그대로 */
 .chat-room-card {
   display: flex;
   justify-content: space-between;
