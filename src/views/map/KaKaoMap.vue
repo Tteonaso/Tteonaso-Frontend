@@ -24,7 +24,7 @@
         :disabled="currentPage === 1"
         class="pagination-button"
       >
-        이전
+        <i class="fas fa-chevron-left"></i>
       </button>
       <button 
         v-for="page in pagination.pages"
@@ -40,15 +40,17 @@
         :disabled="currentPage >= pagination.totalPages"
         class="pagination-button"
       >
-        다음
+        <i class="fas fa-chevron-right"></i>
       </button>
     </div>
+    <BottomNavigationBar />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import BottomNavigationBar from "@/components/BottomNavigationBar.vue";
 
 const router = useRouter();
 const route = useRoute();

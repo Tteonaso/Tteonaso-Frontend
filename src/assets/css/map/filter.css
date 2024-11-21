@@ -6,7 +6,7 @@
     justify-content: flex-start;
     height: 100vh; /* min-height를 height로 변경 */
     padding: 20px;
-    padding-top: 10vh;
+    padding-top: 6vh;
     overflow-y: hidden; /* 세로 스크롤 제거 */
 }
 

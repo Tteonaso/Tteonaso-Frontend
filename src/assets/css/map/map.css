@@ -1,14 +1,18 @@
 .container {
   width: 600px;
-  height: 80vh;
+  height: calc(100vh - 70px); /* 네비게이션 바 높이를 고려하여 조정 */
   margin: 0 auto;
   position: relative;
 }
 
 .mapContainer {
   width: 100%;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 70px - 56px); /* 네비게이션 바 높이를 고려하여 조정 */
   padding-top: 56px; /* 검색창 높이만큼 여백 */
+  position: absolute; /* 절대 위치로 설정하여 네비게이션 바 위에 덮도록 함 */
+  top: 0; /* 상단에 고정 */
+  left: 0; /* 왼쪽에 고정 */
+  z-index: 1; /* 다른 요소들보다 아래에 위치하도록 설정 */
 }
 
 .search-container {
@@ -65,8 +69,8 @@
 
 /* 페이지네이션 스타일 */
 .pagination {
-  position: fixed;
-  bottom: 20px;
+  position: absolute; /* 절대 위치로 설정 */
+  bottom: 5px; /* 아래쪽 여백 */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -77,16 +81,21 @@
   background: rgba(255, 255, 255, 0.9);
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 2;
+  z-index: 2; /* 검색창보다 위에 위치하도록 설정 */
 }
 
 .pagination-button { /* 이전, 다음 버튼 스타일 */
-  padding: 8px 16px;
+  padding: 8px 16px; /* 버튼 패딩 */
   border: 1px solid #ddd;
   border-radius: 4px;
   background: white;
   color: #333;
   cursor: pointer;
+  display: flex; /* 플렉스 박스 사용 */
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  height: 32px; /* 페이지 버튼과 동일한 높이 설정 */
+  min-width: 32px; /* 페이지 버튼과 동일한 최소 너비 설정 */
 }
 
 .page-number {
@@ -99,7 +108,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* 중앙 정렬 */
 }
 
 .page-number.active {

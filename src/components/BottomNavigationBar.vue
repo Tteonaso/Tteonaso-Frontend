@@ -6,7 +6,7 @@
         v-for="item in navItems"
         :key="item.label"
         :class="{ active: selectedItem === item.label }"
-        @click="selectItem(item.label)"
+        @click="selectItem(item)"
       >
         <img :src="item.icon" :alt="item.label" class="nav-icon" />
         <span class="nav-label">{{ item.label }}</span>
@@ -17,21 +17,24 @@
 
 <script setup>
 import {ref} from "vue";
+import { useRouter } from "vue-router";
 import chatIcon from "@/assets/images/Chat.png"; // 채팅 아이콘
 import mapIcon from "@/assets/images/Explore.png"; // 지도 아이콘
 import settingsIcon from "@/assets/images/Settings.png"; // 설정 아이콘
 
+const router = useRouter();
+
 const navItems = [
-  { label: "Chats", icon: chatIcon },
-  { label: "Map", icon: mapIcon },
+  { label: "Chats", icon: chatIcon, path: "/chatroom" },
+  { label: "Map", icon: mapIcon, path: "/map" },
   { label: "Settings", icon: settingsIcon },
 ];
 
 const selectedItem = ref("Chats");
 
-function selectItem(label) {
-  selectedItem.value = label;
-  // 여기서 라우팅 관련 동작을 추가할 수 있습니다.
+function selectItem(item) {
+  selectedItem.value = item.label;
+  router.push(item.path);
 }
 </script>
 
