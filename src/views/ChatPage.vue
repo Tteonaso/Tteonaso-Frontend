@@ -110,6 +110,7 @@ function sendMessage() {
 
 
 
+
   newMessage.value = ''; // 입력 필드 초기화
 }
 
