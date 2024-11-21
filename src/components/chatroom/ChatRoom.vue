@@ -32,7 +32,7 @@ defineProps({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 5px;
   width: 100%; /* 부모의 전체 너비를 채우도록 설정 */
   height: 80px; /* 카드의 높이를 약간 줄임 */
   background-color: #ffffff;
@@ -50,15 +50,16 @@ defineProps({
 .chat-icon img {
   width: 30px; /* 아이콘 크기를 줄임 */
   height: 30px;
+  margin-left: 30px;
 }
 
 .location {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
 }
 
 .participants {
-  font-size: 14px;
+  font-size: 12px;
   color: #555;
 }
 
@@ -71,6 +72,7 @@ defineProps({
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-right: 30px;
 }
 
 .enter-btn:hover {

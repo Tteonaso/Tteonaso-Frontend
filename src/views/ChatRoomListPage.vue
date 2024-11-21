@@ -11,6 +11,7 @@
 <script setup>
 import SearchBar from "@/components/chatroom/SearchBar.vue";
 import ChatRoomList from "@/components/chatroom/ChatRoomList.vue";
+
 import BottomNavigationBar from "@/components/BottomNavigationBar.vue";
 </script>
 
