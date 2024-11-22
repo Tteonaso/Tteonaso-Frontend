@@ -22,9 +22,13 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { ref, onMounted } from 'vue';
 import axios from "axios"; // Vue Router import
+import { useUserStore } from "@/store/user"; // Pinia store import
 
+const userStore = useUserStore(); // Pinia store 사용
 const router = useRouter();
+
 
 async function fetchUserInfo() {
   try {
@@ -43,12 +47,16 @@ async function fetchUserInfo() {
     });
 
     // 응답 데이터 저장
-    userInfo.value = response.data.result;
-    console.log("회원 정보:", typeof userInfo.value.name);
+    // Pinia에 사용자 정보 저장
+    userStore.setUserInfo(response.data.result);
   } catch (error) {
     console.error("회원 정보를 가져오는 데 실패했습니다:", error);
   }
 }
+
+onMounted(async () => {
+  await fetchUserInfo();
+})
 
 
 // Props 정의
