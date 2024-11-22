@@ -23,7 +23,9 @@
 <script setup>
 import { ref } from 'vue';
 import Modal from "@/layouts/Modal.vue";
+import { useRouter } from 'vue-router'; // Vue Router 가져오기
 
+const router = useRouter(); // useRouter 인스턴스 생성
 const email = ref('');
 const password = ref('');
 const isModalVisible = ref(false);  // 모달의 가시성 상태
@@ -56,9 +58,8 @@ const handleLogin = async () => {
       const accessToken = data.result.accessToken;
       localStorage.setItem('accessToken', accessToken);
 
-      // 로그인 성공 후 처리 (예: 리다이렉트, 토큰 저장 등)
-      modalMessage.value = '로그인 성공';
-      isModalVisible.value = true;
+      router.push("/chatroom");
+
 
     } else {
       // 로그인 실패 시 메시지를 모달로 표시

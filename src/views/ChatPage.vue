@@ -38,6 +38,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import axios from "axios";
+
+const userInfo = ref(null); // 응답 데이터를 저장할 변수
 
 // URL에서 chatRoomId를 가져옵니다.
 const router = useRouter();
@@ -50,20 +53,47 @@ let socket = null;
 const messages = ref([]); // 메시지를 관리하는 배열
 const newMessage = ref(''); // 입력된 메시지
 
+// 사용자 정보를 가져오는 함수
+async function fetchUserInfo() {
+  try {
+    // localStorage에서 accessToken 가져오기
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.error("Access token is missing!");
+      return;
+    }
+
+    // Axios 요청 보내기
+    const response = await axios.get("http://localhost:8080/member", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // 응답 데이터 저장
+    userInfo.value = response.data.result;
+    console.log("회원 정보:", userInfo.value);
+  } catch (error) {
+    console.error("회원 정보를 가져오는 데 실패했습니다:", error);
+  }
+}
+
+
 // 웹소켓 연결 및 메시지 처리
-onMounted(() => {
+onMounted( () => {
+  fetchUserInfo();
   // 웹소켓 연결
   socket = new WebSocket('ws://localhost:8080/ws/conn');
 
   // 웹소켓 연결이 열렸을 때
   socket.onopen = () => {
     console.log('WebSocket 연결 완료');
-    console.log(chatRoomId);
+    console.log(userInfo.value.name);
     const joinMessage = JSON.stringify({
       messageType: 'JOIN',
       chatRoomId: chatRoomIdNumber,
       message: '입장',
-      sender: '조희수', // 보내는 사람 이름
+      sender: userInfo.value.name // 보내는 사람 이름
     });
 
     // 서버에 입장 메시지 전송

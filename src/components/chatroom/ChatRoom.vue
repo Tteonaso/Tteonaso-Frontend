@@ -21,9 +21,35 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router"; // Vue Router import
+import { useRouter } from "vue-router";
+import axios from "axios"; // Vue Router import
 
 const router = useRouter();
+
+async function fetchUserInfo() {
+  try {
+    // localStorage에서 accessToken 가져오기
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.error("Access token is missing!");
+      return;
+    }
+
+    // Axios 요청 보내기
+    const response = await axios.get("http://localhost:8080/member", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // 응답 데이터 저장
+    userInfo.value = response.data.result;
+    console.log("회원 정보:", typeof userInfo.value.name);
+  } catch (error) {
+    console.error("회원 정보를 가져오는 데 실패했습니다:", error);
+  }
+}
+
 
 // Props 정의
 const props = defineProps({
