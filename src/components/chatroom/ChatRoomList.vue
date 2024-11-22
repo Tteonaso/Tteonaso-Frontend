@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import ChatRoom from "@/components/chatroom/ChatRoom.vue";
 import axios from 'axios';
 
@@ -28,6 +28,12 @@ const allChatRooms = ref([]); // 모든 ChatRoom 데이터를 저장
 const page = ref(0); // 현재 페이지 번호
 const itemsPerPage = 4; // 페이지당 아이템 수
 const maxPage = ref(0); // 전체 페이지 수
+
+onMounted(() => {
+  fetchAllChatRooms();
+
+})
+
 
 // 데이터를 가져오는 함수
 async function fetchAllChatRooms() {
@@ -65,7 +71,6 @@ function goToNextPage() {
 }
 
 // 초기 데이터를 가져옴
-fetchAllChatRooms();
 </script>
 
 <style scoped>

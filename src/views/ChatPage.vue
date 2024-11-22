@@ -12,7 +12,7 @@
     <div class="chat-messages">
       <!-- 상대방 메시지 -->
       <div v-for="(message, index) in messages" :key="index"
-           :class="message.sender === '조희수' ? 'user-message' : 'other-message'">
+           :class="message.sender === userInfo?.value?.name ? 'user-message' : 'other-message'">
         <p class="user-name">{{ message.sender }}</p>
         <p class="message-content">{{ message.message }}</p>
       </div>
@@ -38,32 +38,35 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import axios from "axios";
+import { useUserStore } from "@/store/user"; // Pinia store import
 
-// URL에서 chatRoomId를 가져옵니다.
+const userStore = useUserStore(); // Pinia store 사용
+const userInfo = ref(userStore.userInfo); // 사용자 정보 참조
 const router = useRouter();
 const route = useRoute();
 const chatRoomId = route.params.chatRoomId;
 const location = route.query.location || 'Unknown Location'; // 채팅방 위치
 const chatRoomIdNumber = Number(chatRoomId.slice(0, 1));
-
 let socket = null;
 const messages = ref([]); // 메시지를 관리하는 배열
 const newMessage = ref(''); // 입력된 메시지
 
+
 // 웹소켓 연결 및 메시지 처리
-onMounted(() => {
+onMounted( () => {
+  console.log(userInfo.value)
   // 웹소켓 연결
   socket = new WebSocket('ws://localhost:8080/ws/conn');
 
   // 웹소켓 연결이 열렸을 때
   socket.onopen = () => {
     console.log('WebSocket 연결 완료');
-    console.log(chatRoomId);
     const joinMessage = JSON.stringify({
       messageType: 'JOIN',
       chatRoomId: chatRoomIdNumber,
-      message: '입장',
-      sender: '조희수', // 보내는 사람 이름
+      message: '채팅방에 입장하였습니다.',
+      sender: userInfo.value.name // 보내는 사람 이름
     });
 
     // 서버에 입장 메시지 전송
@@ -86,6 +89,15 @@ onMounted(() => {
   // 연결 종료 시
   socket.onclose = (event) => {
     console.log('WebSocket 연결 종료', event);
+    const joinMessage = JSON.stringify({
+      messageType: 'LEAVE',
+      chatRoomId: chatRoomIdNumber,
+      message: '채팅방을 나갔습니다.',
+      sender: userInfo.value.name // 보내는 사람 이름
+    });
+
+    // 서버에 입장 메시지 전송
+    socket.send(joinMessage);
   };
 
   // 오류 발생 시
@@ -102,15 +114,11 @@ function sendMessage() {
     messageType: 'TALK',
     chatRoomId: chatRoomIdNumber,
     message: newMessage.value,
-    sender: '조희수', // 보내는 사람 이름
+    sender: userInfo.value.name, // 보내는 사람 이름
   };
 
   // 서버로 메시지 전송
   socket.send(JSON.stringify(messageData));
-
-
-
-
   newMessage.value = ''; // 입력 필드 초기화
 }
 

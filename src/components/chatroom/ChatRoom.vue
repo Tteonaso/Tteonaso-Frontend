@@ -21,9 +21,43 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router"; // Vue Router import
+import { useRouter } from "vue-router";
+import { ref, onMounted } from 'vue';
+import axios from "axios"; // Vue Router import
+import { useUserStore } from "@/store/user"; // Pinia store import
 
+const userStore = useUserStore(); // Pinia store 사용
 const router = useRouter();
+
+
+async function fetchUserInfo() {
+  try {
+    // localStorage에서 accessToken 가져오기
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.error("Access token is missing!");
+      return;
+    }
+
+    // Axios 요청 보내기
+    const response = await axios.get("http://localhost:8080/member", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // 응답 데이터 저장
+    // Pinia에 사용자 정보 저장
+    userStore.setUserInfo(response.data.result);
+  } catch (error) {
+    console.error("회원 정보를 가져오는 데 실패했습니다:", error);
+  }
+}
+
+onMounted(async () => {
+  await fetchUserInfo();
+})
+
 
 // Props 정의
 const props = defineProps({
