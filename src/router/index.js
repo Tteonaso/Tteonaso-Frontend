@@ -8,6 +8,7 @@ import SignIn from "@/components/member/SignIn.vue";
 import OnBoarding from "@/components/member/OnBoarding.vue";
 import ChatRoomListPage from "@/views/ChatRoomListPage.vue";
 import ChatPage from "@/views/ChatPage.vue";
+import Survey from "@/components/gpt-schedule/Survey.vue";
 
 const routes = [
   {
@@ -50,6 +51,11 @@ const routes = [
     name: 'ChatPage',
     component: ChatPage, // 채팅방 상세 페이지
     props: true, // props로 전달
+  },
+  {
+    path: '/survey', // 새로운 경로 추가
+    name: 'Survey',
+    component: Survey, // Survey.vue 컴포넌트 등록
   },
 ];
 
