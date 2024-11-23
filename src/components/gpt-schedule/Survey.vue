@@ -52,13 +52,16 @@
 </template>
 
 <script setup>
+import { useSurveyStore } from '@/store/survey';
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Question from './Question.vue';
 import axios from 'axios';
 
+const router = useRouter();
 const questions = ref([]);
 const currentQuestion = ref(0);
-const selectedAnswers = ref([]); // 각 질문에 대한 선택된 답변 초기화
+const selectedAnswers = ref([]);
 
 // 질문을 서버에서 받아오는 함수
 const fetchQuestions = async () => {
@@ -134,19 +137,47 @@ const handleSelect = (optionName) => {
   }
 };
 
+// 답변 확인 함수
+const checkAnswers = () => {
+  if (selectedAnswers.value[currentQuestion.value].length === 0) {
+    alert('해당 질문에 답변해 주세요.'); // 선택되지 않았을 경우 경고
+    return false;
+  }
+  return true;
+};
+
 // 다음 질문으로 이동
 const goToNextQuestion = () => {
-  if (selectedAnswers.value[currentQuestion.value]) {
+  if (checkAnswers()) {
     currentQuestion.value++;
-  } else {
-    alert('모든 질문에 답변해 주세요.');
   }
 };
 
-// 설문 완료 처리
 const finishSurvey = () => {
-  console.log('설문 완료', selectedAnswers.value);
-  alert('선택한 값: ' + JSON.stringify(selectedAnswers.value));
+  const surveyStore = useSurveyStore();
+
+  // 요청 데이터 구성
+  const requestData = {
+    departureCity: selectedAnswers.value[0][0] || '',
+    travelDuration: selectedAnswers.value[1][0] || '',
+    companions: selectedAnswers.value[2][0] || '',
+    travelStyles: Array.from(selectedAnswers.value[3] || []),
+    schedulePreference: selectedAnswers.value[4][0] || ''
+  };
+
+  // 마지막 질문 체크
+  if (selectedAnswers.value[4].length === 0) { // 5번째 질문이 체크되지 않았을 경우
+    alert('일정 선호도를 선택해 주세요.'); // 경고 메시지
+    return; // 함수 종료
+  }
+
+  // Store에 데이터 저장
+  surveyStore.setRequestData(requestData);
+
+  // 추천 페이지로 이동
+  router.push({ name: 'Recommendation' }).catch(err => {
+    console.error('Error navigating to Recommendation:', err);
+  });
 };
 
 onMounted(fetchQuestions);
