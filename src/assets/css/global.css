@@ -22,3 +22,18 @@
     font-family: "BMY";
     src: url("@/assets/fonts/BMYEONSUNG_ttf.ttf");
 }
+
+@font-face {
+    font-family: "NanumB";
+    src: url("@/assets/fonts/NanumBarunpenB.ttf");
+}
+
+@font-face {
+    font-family: "pretendard";
+    src: url("@/assets/fonts/PretendardVariable.ttf");
+}
+
+@font-face {
+    font-family: "NanumG";
+    src: url("@/assets/fonts/NanumGothic.ttf");
+}
