@@ -9,6 +9,7 @@ import OnBoarding from "@/components/member/OnBoarding.vue";
 import ChatRoomListPage from "@/views/ChatRoomListPage.vue";
 import ChatPage from "@/views/ChatPage.vue";
 import Survey from "@/components/gpt-schedule/Survey.vue";
+import Recommendation from "@/components/gpt-schedule/Recommendation.vue";
 
 const routes = [
   {
@@ -56,6 +57,12 @@ const routes = [
     path: '/survey', // 새로운 경로 추가
     name: 'Survey',
     component: Survey, // Survey.vue 컴포넌트 등록
+  },
+  {
+    path: '/recommendation',
+    name: 'Recommendation',
+    component: Recommendation,
+    props: true
   },
 ];
 
