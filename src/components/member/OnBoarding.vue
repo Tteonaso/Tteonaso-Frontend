@@ -1,9 +1,9 @@
 <template>
   <div id="ground">
     <img src="../../assets/images/tteonaso.png" id="logo">
-    <button class="btn" id="signin" @click="goToSignIn">로그인</button>
+    <button class="btn" id="signin" @click="goToSignIn" style="font-family: BMHP">로그인</button>
     <!-- id=signup 버튼 클릭 시 /signup 라우트로 이동 -->
-    <button class="btn" id="signup" @click="goToSignUp">회원가입</button>
+    <button class="btn" id="signup" @click="goToSignUp" style="font-family: BMHP">회원가입</button>
   </div>
 </template>
 

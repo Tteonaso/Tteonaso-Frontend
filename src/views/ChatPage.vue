@@ -5,7 +5,7 @@
       <button class="back-button" @click="goBack">
         <img src="../assets/images/ArrowLeft.png" alt="Back" />
       </button>
-      <h1 class="chat-title">{{ location }}</h1>
+      <h1 class="chat-title" style="font-family: BMHP">{{ location }}</h1>
     </div>
 
     <!-- 채팅 메시지 리스트 -->
@@ -198,6 +198,7 @@ function goBack() {
   font-weight: bold;
   margin-bottom: 4px;
   color: #4a4a4a; /* 사용자명 색상 */
+  font-family: BMHP;
 }
 
 /* 내가 보낸 메시지 (오른쪽 정렬) */
@@ -215,6 +216,7 @@ function goBack() {
 .message-content {
   font-size: 14px;
   line-height: 1.5;
+  font-family: BMHA;
 }
 
 /* 입력 영역 스타일 */
@@ -236,6 +238,7 @@ function goBack() {
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 14px;
+  font-family: BMHA;
 }
 
 .add-button,

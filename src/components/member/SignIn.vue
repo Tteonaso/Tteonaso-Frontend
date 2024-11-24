@@ -1,7 +1,7 @@
 <template>
   <div id="ground">
-    <h1 class="title">로그인</h1>
-    <p class="description">서비스를 이용하기 위해서는 로그인해 주세요</p>
+    <h1 class="title" style="font-family: BMHP">로그인</h1>
+    <p class="description" style="font-family: BMHA">서비스를 이용하기 위해서는 로그인해 주세요</p>
     <form class="form" @submit.prevent="handleLogin">
       <div class="input-group">
         <label for="email">이메일</label>
@@ -109,6 +109,7 @@ body {
   font-weight: bold;
   margin-bottom: 10px;
   color: #000;
+  font-family: BMHP;
 }
 
 /* 설명 텍스트 */
@@ -116,6 +117,7 @@ body {
   font-size: 14px;
   color: #555;
   margin-bottom: 20px;
+  font-family: BMHA;
 }
 
 /* 입력 폼 */
@@ -134,6 +136,7 @@ body {
   font-size: 14px;
   margin-bottom: 5px;
   color: #333;
+  font-family: BMHP;
 }
 
 .input-group input {
@@ -141,6 +144,7 @@ body {
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 14px;
+  font-family: BMHA;
 }
 
 /* 성별 버튼 그룹 */
@@ -160,6 +164,7 @@ body {
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
+  font-family: BMHP;
 }
 
 .gender-btn.selected,

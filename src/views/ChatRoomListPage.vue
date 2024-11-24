@@ -1,6 +1,6 @@
 <template>
   <div id="ground">
-    <h3>지역별 채팅방</h3>
+    <h3 style="font-family: BMHP">지역별 채팅방</h3>
     <SearchBar class="search-bar"></SearchBar>
     <ChatRoomList></ChatRoomList>
     <BottomNavigationBar></BottomNavigationBar>

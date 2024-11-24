@@ -112,11 +112,13 @@ function enterChatRoom() {
 .location {
   font-size: 14px;
   font-weight: bold;
+  font-family: BMJ;
 }
 
 .participants {
   font-size: 12px;
   color: #555;
+  font-family: BMHA;
 }
 
 .enter-btn {
@@ -129,6 +131,7 @@ function enterChatRoom() {
   cursor: pointer;
   transition: all 0.3s ease;
   margin-right: 30px;
+  font-family: BMHP;
 }
 
 .enter-btn:hover {

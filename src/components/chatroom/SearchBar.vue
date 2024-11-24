@@ -39,6 +39,7 @@
   font-size: 16px;
   background-color: transparent;
   padding: 8px;
+  font-family: BMHA;
 }
 
 /* 검색 버튼 */
