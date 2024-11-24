@@ -132,6 +132,7 @@ body {
   font-weight: bold;
   margin-bottom: 10px;
   color: #000;
+  font-family: BMHP;
 }
 
 /* 설명 텍스트 */
@@ -139,6 +140,7 @@ body {
   font-size: 14px;
   color: #555;
   margin-bottom: 20px;
+  font-family: BMHA;
 }
 
 /* 입력 폼 */
@@ -157,6 +159,7 @@ body {
   font-size: 14px;
   margin-bottom: 5px;
   color: #333;
+  font-family: BMHP;
 }
 
 .input-group input {
@@ -164,6 +167,7 @@ body {
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 14px;
+  font-family: BMHA;
 }
 
 /* 성별 버튼 그룹 */
@@ -183,6 +187,7 @@ body {
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
+  font-family: BMHP;
 }
 
 .gender-btn.selected,
@@ -203,6 +208,7 @@ body {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: BMHP;
 }
 
 .submit-btn:hover {

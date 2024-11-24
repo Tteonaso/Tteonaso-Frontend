@@ -1,7 +1,7 @@
 <template>
   <div v-if="isVisible" class="modal-overlay" @click="closeModal">
     <div class="modal-content" @click.stop>
-      <p>{{ message }}</p>
+      <p style="font-family: BMHA">{{ message }}</p>
       <button @click="closeModal" class="close-btn">확인</button>
     </div>
   </div>
@@ -65,6 +65,7 @@ const closeModal = () => {
   color: white;
   font-size: 14px;
   cursor: pointer;
+  font-family: BMHP;
 }
 
 .close-btn:hover {

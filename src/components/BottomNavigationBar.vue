@@ -74,6 +74,7 @@ function selectItem(item) {
 /* 텍스트 라벨 스타일 */
 .nav-label {
   font-size: 12px;
+  font-family: BMHA;
 }
 
 /* 활성화된 아이템 스타일 */
