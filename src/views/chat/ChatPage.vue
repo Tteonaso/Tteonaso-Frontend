@@ -3,7 +3,7 @@
     <!-- 채팅 헤더 -->
     <div class="chat-header">
       <button class="back-button" @click="goBack">
-        <img src="../assets/images/ArrowLeft.png" alt="Back" />
+        <img src="../../assets/images/ArrowLeft.png" alt="Back" />
       </button>
       <h1 class="chat-title" style="font-family: BMHP">{{ location }}</h1>
     </div>
@@ -28,7 +28,7 @@
           placeholder="메시지를 입력하세요"
         />
         <button class="send-button" @click="sendMessage">
-          <img src="../assets/images/Send.png" alt="Send" />
+          <img src="../../assets/images/Send.png" alt="Send" />
         </button>
       </div>
     </div>
@@ -39,7 +39,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from "axios";
-import { useUserStore } from "@/store/user"; // Pinia store import
+import { useUserStore } from "@/store/user.js"; // Pinia store import
 
 const userStore = useUserStore(); // Pinia store 사용
 const userInfo = ref(userStore.userInfo); // 사용자 정보 참조

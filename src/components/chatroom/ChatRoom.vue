@@ -1,4 +1,5 @@
 <template>
+
   <div class="chat-room-card">
     <div class="chat-room-info">
       <div class="chat-icon">

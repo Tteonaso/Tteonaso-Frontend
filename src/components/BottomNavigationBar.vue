@@ -27,7 +27,7 @@ const router = useRouter();
 const navItems = [
   { label: "Chats", icon: chatIcon, path: "/chatroom" },
   { label: "Map", icon: mapIcon, path: "/map" },
-  { label: "Settings", icon: settingsIcon },
+  { label: "Settings", icon: settingsIcon, path: "/setting"},
 ];
 
 const selectedItem = ref("Chats");

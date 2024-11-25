@@ -6,10 +6,11 @@ import SearchPage from "@/views/map/SearchPage.vue";
 import SignUp from '@/components/member/SignUp.vue'; // SignUp.vue 경로를 가져옵니다
 import SignIn from "@/components/member/SignIn.vue";
 import OnBoarding from "@/components/member/OnBoarding.vue";
-import ChatRoomListPage from "@/views/ChatRoomListPage.vue";
-import ChatPage from "@/views/ChatPage.vue";
+import ChatRoomListPage from "@/views/chat/ChatRoomListPage.vue";
+import ChatPage from "@/views/chat/ChatPage.vue";
 import Survey from "@/components/gpt-schedule/Survey.vue";
 import Recommendation from "@/components/gpt-schedule/Recommendation.vue";
+import SettingPage from "@/views/member/SettingPage.vue";
 
 const routes = [
   {
@@ -62,6 +63,12 @@ const routes = [
     path: '/recommendation',
     name: 'Recommendation',
     component: Recommendation,
+    props: true
+  },
+  {
+    path: '/setting',
+    name: 'SettingPage',
+    component: SettingPage,
     props: true
   },
 ];
