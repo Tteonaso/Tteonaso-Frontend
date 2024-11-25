@@ -1,4 +1,19 @@
 <template>
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="검색하기"
+      class="search-input"
+      v-model="searchKeyword"
+    />
+    <button class="search-button" @click="searchChatRooms"> <!-- 검색 버튼 클릭 이벤트 -->
+      <img
+        src="../../assets/images/searchIcon.png"
+        alt="검색"
+        class="search-icon"
+      />
+    </button>
+  </div>
     <div class="chat-room-list">
         <ChatRoom
                 v-for="chatRoom in chatRooms"
@@ -28,12 +43,37 @@ const allChatRooms = ref([]); // 모든 ChatRoom 데이터를 저장
 const page = ref(0); // 현재 페이지 번호
 const itemsPerPage = 4; // 페이지당 아이템 수
 const maxPage = ref(0); // 전체 페이지 수
+const searchKeyword = ref(''); // 검색 입력 필드 값
 
 onMounted(() => {
   fetchAllChatRooms();
 
 })
 
+// 검색 요청을 보내는 함수
+async function searchChatRooms() {
+  if (!searchKeyword.value.trim()) {
+    console.warn("검색어가 비어 있습니다.");
+    return;
+  }
+
+  try {
+    const response = await axios.get('http://localhost:8080/chatroom/search', {
+      params: {
+        keyword: searchKeyword.value.trim(),
+      },
+    });
+
+    allChatRooms.value = response.data.result; // 검색 결과로 chatRooms 업데이트
+    console.log(response.data.result);
+
+    maxPage.value = Math.ceil(allChatRooms.value.length / itemsPerPage);
+    page.value = 0; // 검색 결과를 보여줄 때 첫 페이지로 이동
+    updateChatRooms();
+  } catch (error) {
+    console.error('검색 요청 실패:', error);
+  }
+}
 
 // 데이터를 가져오는 함수
 async function fetchAllChatRooms() {
@@ -120,5 +160,49 @@ function goToNextPage() {
 .next-icon {
     width: 24px;
     height: 24px;
+}
+
+/* 검색바 컨테이너 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f9fafc;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  padding: 8px 16px;
+  width: 80%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 검색 입력 필드 */
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background-color: transparent;
+  padding: 8px;
+  font-family: BMHA;
+}
+
+/* 검색 버튼 */
+.search-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 돋보기 아이콘 */
+.search-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.search-bar {
+  margin-bottom: 20px; /* SearchBar와 ChatRoomList 사이의 간격 */
 }
 </style>
