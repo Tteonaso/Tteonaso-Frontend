@@ -11,6 +11,7 @@ import ChatPage from "@/views/chat/ChatPage.vue";
 import Survey from "@/components/gpt-schedule/Survey.vue";
 import Recommendation from "@/components/gpt-schedule/Recommendation.vue";
 import SettingPage from "@/views/member/SettingPage.vue";
+import Update from "@/components/member/Update.vue";
 
 const routes = [
   {
@@ -69,6 +70,12 @@ const routes = [
     path: '/setting',
     name: 'SettingPage',
     component: SettingPage,
+    props: true
+  },
+  {
+    path: '/member/update',
+    name: 'Update',
+    component: Update,
     props: true
   },
 ];

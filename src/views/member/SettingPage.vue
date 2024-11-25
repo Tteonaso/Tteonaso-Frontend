@@ -44,7 +44,7 @@ const menus = ref([
   { id: 1, title: '장소 기록하기', path: '/record-location' },
   { id: 2, title: '나만의 장소', path: '/my-places' },
   { id: 3, title: '원하는 여행 설계받기', path: '/survey' },
-  { id: 4, title: '회원 정보 관리', path: '/manage-account' },
+  { id: 4, title: '회원 정보 관리', path: '/member/update' },
 ]);
 
 // 페이지 이동 함수
