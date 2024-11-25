@@ -190,6 +190,11 @@ onMounted(fetchQuestions);
   margin: 0 auto;
   display: flex;
   flex-direction: column; /* 세로 방향으로 정렬 */
+  overflow-y: auto; /* 세로 스크롤 가능 */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨기기 */
 }
 
 .survey-container {
@@ -201,11 +206,12 @@ onMounted(fetchQuestions);
   display: flex;
   flex-direction: column; /* 세로 방향으로 정렬 */
   justify-content: space-between; /* 공간을 균등하게 분배 */
+  font-family: "NanumB";
 }
 
 .question-margin {
   margin-top: 20px; /* 여백 조정 */
-  font-family: "NanumG";
+  font-family: "NanumB";
 }
 
 .progress-bar-container {
@@ -225,7 +231,7 @@ onMounted(fetchQuestions);
 }
 
 .progress-bar-segment.active {
-  background-color: #28a745; /* 활성화된 연두색 */
+  background-color: #78B3CE; /* 활성화된 연두색 */
 }
 
 .button-container {
@@ -241,20 +247,21 @@ onMounted(fetchQuestions);
   padding: 15px; /* 패딩을 늘려서 버튼 크기 통일 */
   border: none;
   border-radius: 8px;
-  background-color: #d4edda; /* 연한 배경색 */
+  background-color: #C9E6F0; /* 연한 배경색 */
   color: #333;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: "NanumB";
 }
 
 .option-button.selected {
-  background-color: #0056b3; /* 선택된 버튼 색상 */
+  background-color: #78B3CE; /* 선택된 버튼 색상 */
   color: white; /* 선택된 버튼 텍스트 색상 */
 }
 
 .option-button:hover {
-  background-color: #c3e6cb; /* 호버 시 색상 변경 */
+  background-color: #78B3CE; /* 호버 시 색상 변경 */
 }
 
 .navigation-buttons {
@@ -264,16 +271,18 @@ onMounted(fetchQuestions);
 .next-button {
   width: 100%; /* 버튼을 전체 너비로 설정 */
   padding: 15px;
+  margin-top: 40px;
   border: none;
   border-radius: 8px;
-  background-color: #28a745;
+  background-color: #80C4E9;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: "NanumB";
 }
 
 .next-button:hover {
-  background-color: #218838;
+  background-color: #4335A7;
 }
 </style>
