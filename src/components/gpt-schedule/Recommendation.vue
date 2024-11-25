@@ -1,27 +1,31 @@
 <template>
-  <div class="recommendation-container" v-if="!isLoading">
-    <div v-if="isValid">
-      <h2>추천 여행지</h2>
-      <ul>
-        <li v-for="place in travelRecommendations" :key="place.placeName">
-          <strong>{{ place.placeName }}</strong>: {{ place.description }} ({{ place.recommendationReason }})
-        </li>
-      </ul>
-      <h2>제안된 일정</h2>
-      <ul>
-        <li v-for="(itinerary, index) in suggestedItinerary" :key="index">{{ itinerary }}</li>
-      </ul>
-      <h2>추가 팁</h2>
-      <ul>
-        <li v-for="(tip, index) in additionalTips" :key="index">{{ tip }}</li>
-      </ul>
+  <div class="container">
+    <div class="recommendation-container">
+      <div v-if="isLoading" class="loading-container">
+        <img src="@/assets/images/loading.gif" alt="Loading..." class="loading-gif" />
+        <p class="loading-message">추천 일정을 계획하고 있습니다..</p>
+        <p class="loading-message">잠시만 기다려주세요.</p>
+      </div>
+      <div v-else-if="isValid">
+        <h2>추천 여행지</h2>
+        <ul>
+          <li v-for="place in travelRecommendations" :key="place.placeName">
+            <strong>{{ place.placeName }}</strong>: {{ place.description }} ({{ place.recommendationReason }})
+          </li>
+        </ul>
+        <h2>제안된 일정</h2>
+        <ul>
+          <li v-for="(itinerary, index) in suggestedItinerary" :key="index">{{ itinerary }}</li>
+        </ul>
+        <h2>추가 팁</h2>
+        <ul>
+          <li v-for="(tip, index) in additionalTips" :key="index">{{ tip }}</li>
+        </ul>
+      </div>
+      <div v-else>
+        <p>추천 정보를 가져오는 데 실패했습니다.</p>
+      </div>
     </div>
-    <div v-else>
-      <p>추천 정보를 가져오는 데 실패했습니다.</p>
-    </div>
-  </div>
-  <div v-else>
-    <p>로딩 중...</p>
   </div>
 </template>
 
@@ -72,11 +76,35 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.recommendation-container {
-  width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: "NanumG";
+.container {
+  width: 600px; /* 너비 설정 */
+  margin: 0 auto; /* 중앙 정렬 */
+  padding: 20px; /* 패딩 추가 */
+  font-family: "NanumG"; /* 폰트 설정 */
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  align-items: center; /* 중앙 정렬 */
+  justify-content: center; /* 중앙 정렬 */
+  height: 100%; /* 부모 높이에 맞춤 */
+  margin-top: 30%; /* 위쪽 마진 30% 설정 */
+}
+
+.loading-gif {
+  display: block;
+  margin: 0 auto; /* 중앙 정렬 */
+  width: 300px; /* GIF 너비 조정 */
+  height: auto; /* 높이는 자동으로 조정 */
+}
+
+.loading-message {
+  margin-top: 10px; /* 메시지와 GIF 간의 여백 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  font-family: "BMD";
+  font-size: 20px;
+  color: #28a745;
 }
 
 h2 {
