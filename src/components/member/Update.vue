@@ -1,10 +1,10 @@
 <template>
   <div id="ground">
     <h1 class="title">회원 정보 수정</h1>
-    <form class="form" @submit.prevent="handleSignUp">
+    <form class="form" @submit.prevent="handleUpdate">
       <div class="input-group">
         <label for="name">이름</label>
-        <input v-model="name" type="text" id="name" placeholder="이름" />
+        <input v-model="name" type="text" id="name" placeholder="이름"/>
       </div>
       <div class="input-group">
         <label for="password">비밀번호</label>
@@ -31,68 +31,83 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import Modal from "@/layouts/Modal.vue";
 import { useRouter } from 'vue-router'; // Vue Router 가져오기
+import { useUserStore } from "@/store/user.js"; // Pinia store import
 
+const userStore = useUserStore(); // Pinia store 사용
+const userInfo = ref(userStore.userInfo); // 사용자 정보 참조
 const name = ref('');
-const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const age = ref('');
 const phone = ref('');
-const gender = ref(''); // 'FEMALE' or 'MALE'
 const isModalVisible = ref(false);  // 모달의 가시성 상태
 const modalMessage = ref('');
 const router = useRouter()
 
-// 성별 선택 처리
-const selectGender = (selectedGender) => {
-  gender.value = selectedGender;
-};
-
+onMounted(async () => {
+  name.value = userInfo.value.name;
+  age.value = userInfo.value.age;
+  phone.value = userInfo.value.phone;
+  password.value = userInfo.value.password;
+  confirmPassword.value = userInfo.value.confirmPassword;
+})
 // 회원가입 처리 함수
-const handleSignUp = async () => {
+const handleUpdate = async () => {
   if (password.value !== confirmPassword.value) {
     modalMessage.value = '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
     isModalVisible.value = true;
     return;
   }
 
-  const formData = new FormData();
+  // JSON 데이터 생성
+  const requestData = {
+    name: name.value,
+    password: password.value,
+    age: age.value,
+    phone: phone.value,
+  };
 
-  // formData에 값 추가
-  formData.append('name', name.value);
-  formData.append('email', email.value);
-  formData.append('password', password.value); // 비밀번호가 일치할 때만 추가
-  formData.append('age', age.value);
-  formData.append('phone', phone.value);
-  formData.append('gender', gender.value);
+  // localStorage에서 accessToken 가져오기
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (!accessToken) {
+    modalMessage.value = '로그인이 필요합니다.';
+    isModalVisible.value = true;
+    return;
+  }
 
   try {
-    const response = await fetch('http://localhost:8080/member/signup', {
-      method: 'POST',
-      body: formData, // FormData를 body로 전송
+    const response = await fetch('http://localhost:8080/member/update', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json', // JSON 형식으로 요청
+        'Authorization': `Bearer ${accessToken}`, // Bearer 토큰 추가
+      },
+      body: JSON.stringify(requestData), // 객체를 JSON 문자열로 변환
     });
 
     const data = await response.json();
 
     if (response.ok && data.isSuccess) {
-      console.log('회원가입 성공:', data);
-      // 회원가입 성공 후 처리 (예: 리다이렉트, 토큰 저장 등)
-      router.push('/signin'); // '/signin' 라우트로 이동
+      console.log('회원 정보 수정 성공:', data);
+      // 회원 정보 수정 성공 처리 (예: 리다이렉트)
+      router.push('/setting'); // '/setting' 라우트로 이동
     } else {
-      console.error('회원가입 실패:', data);
+      console.error('회원 정보 수정 실패:', data);
       // 실패 시 처리 (모달 등으로 메시지 표시)
-      modalMessage.value = data.message;
+      modalMessage.value = data.message || '회원 정보 수정에 실패했습니다.';
       isModalVisible.value = true;
     }
   } catch (error) {
-    console.error('회원가입 요청 중 오류 발생:', error);
-    modalMessage.value = '회원가입 중 오류가 발생했습니다. 다시 시도해주세요.';
+    console.error('회원 정보 수정 요청 중 오류 발생:', error);
+    modalMessage.value = '회원 정보 수정 중 오류가 발생했습니다. 다시 시도해주세요.';
     isModalVisible.value = true;
   }
 };
+
 </script>
 
 <style scoped>
