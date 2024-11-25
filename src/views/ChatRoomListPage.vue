@@ -1,7 +1,6 @@
 <template>
   <div id="ground">
     <h3 style="font-family: BMHP">지역별 채팅방</h3>
-    <SearchBar class="search-bar"></SearchBar>
     <ChatRoomList></ChatRoomList>
     <BottomNavigationBar></BottomNavigationBar>
   </div>
@@ -28,7 +27,5 @@ import BottomNavigationBar from "@/components/BottomNavigationBar.vue";
   background-color: #f9fafc;
 }
 
-.search-bar {
-  margin-bottom: 20px; /* SearchBar와 ChatRoomList 사이의 간격 */
-}
+
 </style>
