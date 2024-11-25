@@ -50,10 +50,10 @@ const props = defineProps({
 }
 
 .option-button.selected {
-  background-color: #0056b3; /* 선택된 버튼 색상 */
+  background-color: #C9E6F0; /* 선택된 버튼 색상 */
 }
 
 .option-button:hover {
-  background-color: #0056b3; /* 호버 시 색상 변경 */
+  background-color: #78B3CE; /* 호버 시 색상 변경 */
 }
 </style>
