@@ -12,7 +12,9 @@
     <div class="chat-messages">
       <!-- 상대방 메시지 -->
       <div v-for="(message, index) in messages" :key="index"
-           :class="message.sender === userInfo?.value?.name ? 'user-message' : 'other-message'">
+      :class="[{'user-message': message.sender === userInfo?.name}, {'other-message': message.sender !== userInfo?.name}]"
+      >
+<!--           :class="message.sender === userInfo?.value?.name ? 'user-message' : 'other-message'"-->
         <p class="user-name">{{ message.sender }}</p>
         <p class="message-content">{{ message.message }}</p>
       </div>
@@ -108,6 +110,7 @@ onMounted( () => {
 
 // 메시지 전송 함수
 function sendMessage() {
+  console.log(userInfo.value)
   if (newMessage.value.trim() === '') return; // 메시지가 비어 있으면 전송하지 않음
 
   const messageData = {

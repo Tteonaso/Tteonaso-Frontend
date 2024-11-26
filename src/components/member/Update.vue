@@ -7,12 +7,12 @@
         <input v-model="name" type="text" id="name" placeholder="이름"/>
       </div>
       <div class="input-group">
-        <label for="password">비밀번호</label>
-        <input v-model="password" type="password" id="password" placeholder="비밀번호" />
+        <label for="password">기존 비밀번호</label>
+        <input v-model="originalPassword" type="password" id="password" placeholder="기존 비밀번호" />
       </div>
       <div class="input-group">
-        <label for="confirm-password">비밀번호 확인</label>
-        <input v-model="confirmPassword" type="password" id="confirm-password" placeholder="비밀번호 확인" />
+        <label for="confirm-password">새로운 비밀번호 </label>
+        <input v-model="newPassword" type="password" id="confirm-password" placeholder="새로운 비밀번호" />
       </div>
       <div class="input-group">
         <label for="age">나이</label>
@@ -39,8 +39,8 @@ import { useUserStore } from "@/store/user.js"; // Pinia store import
 const userStore = useUserStore(); // Pinia store 사용
 const userInfo = ref(userStore.userInfo); // 사용자 정보 참조
 const name = ref('');
-const password = ref('');
-const confirmPassword = ref('');
+const originalPassword = ref('');
+const newPassword = ref('');
 const age = ref('');
 const phone = ref('');
 const isModalVisible = ref(false);  // 모달의 가시성 상태
@@ -51,21 +51,14 @@ onMounted(async () => {
   name.value = userInfo.value.name;
   age.value = userInfo.value.age;
   phone.value = userInfo.value.phone;
-  password.value = userInfo.value.password;
-  confirmPassword.value = userInfo.value.confirmPassword;
 })
 // 회원가입 처리 함수
 const handleUpdate = async () => {
-  if (password.value !== confirmPassword.value) {
-    modalMessage.value = '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
-    isModalVisible.value = true;
-    return;
-  }
-
   // JSON 데이터 생성
   const requestData = {
     name: name.value,
-    password: password.value,
+    originalPassword: originalPassword.value,
+    newPassword: newPassword.value,
     age: age.value,
     phone: phone.value,
   };
